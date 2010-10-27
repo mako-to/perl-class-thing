@@ -37,7 +37,10 @@ sub new {
 
 sub stash {
     my $self = shift;
-    return $self->{__stash} ||= Hash::MultiValue->new;
+    if ( @_ or ! exists $self->{_stash} ) {
+        $self->{_stash} = Hash::MultiValue->new(@_);
+    }
+    return $self->{_stash};
 }
 *param = \&stash;
 
